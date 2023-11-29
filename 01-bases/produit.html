@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Produit</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <div class="max-w-5xl mx-auto py-6">
+        <div class="flex items-center gap-6">
+          <div class="w-1/2">
+            <img :src="selectedProduct.image" :alt="name">
+          </div>
+          <div class="w-1/2">
+            <h1 class="text-4xl font-bold mb-2">{{ name }}</h1>
+            <p class="mb-2">{{ price }}</p>
+            <input type="number" v-model="quantity" class="border-gray-300 rounded-lg mb-4">
+
+            <p class="text-green-500" v-if="product.stock">En stock ({{ product.stock }})</p>
+            <p class="text-red-500" v-else>Pas de stock</p>
+
+            <ul class="mt-4">
+              <li v-for="feature in product.features">- {{ feature }}</li>
+            </ul>
+
+            <div class="flex gap-3 mt-4">
+              <div
+                class="w-12 h-12 cursor-pointer"
+                :style="{ backgroundColor: variation.color }"
+                v-for="(variation, index) in product.variations"
+                :key="variation.color"
+                @click="selected = index"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { computed, createApp, ref, watch } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+
+      createApp({
+        setup() {
+          const product = ref({
+            name: 'Cat',
+            brand: 'Brand',
+            image: 'https://img.20mn.fr/z8mxUA40R9WkuaIllQOGtSk/1200x768_les-chats-aiment-grimper-dans-les-arbres',
+            price: 10,
+            stock: 10,
+            features: ['Mignon', 'Affectueux', 'Gourmand'],
+            variations: [
+              { color: 'blue', image: 'https://img.20mn.fr/z8mxUA40R9WkuaIllQOGtSk/1200x768_les-chats-aiment-grimper-dans-les-arbres', price: 10 },
+              { color: 'red', image: 'https://cdn-s-www.leprogres.fr/images/5DFD03BA-D491-47BC-8AAE-3D1AD1B7BBA2/NW_raw/comprendre-un-chat-n-est-pas-toujours-facile-illustration-adobe-stock-1691421526.jpg', price: 12 },
+            ],
+          });
+          const quantity = ref(1);
+          const selected = ref(null); // Variation sélectionnée
+
+          const numberFormat = new Intl.NumberFormat('fr', { style: 'currency', currency: 'EUR' });
+
+          // Computed
+          const name = computed(() => `${product.value.brand} ${product.value.name}`);
+
+          // Me donne le produit sélectionné (avec ou sans variation)
+          const selectedProduct = computed(() => {
+            if (selected.value) { // Si variation
+              return product.value.variations[selected.value];
+            }
+
+            return product.value;
+          });
+          const price = computed(() => numberFormat.format(selectedProduct.value.price * quantity.value));
+
+          // Watchers
+          watch(quantity, (newValue, oldValue) => {
+            if (newValue > product.value.stock) {
+              alert(`Il n'y a pas ${newValue} produits en stock.`);
+              quantity.value = oldValue;
+            }
+
+            if (newValue <= 0) {
+              quantity.value = 1;
+              alert(`Pas de stock négatif.`);
+            }
+          });
+
+          return { product, quantity, selected, name, selectedProduct, price };
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>
