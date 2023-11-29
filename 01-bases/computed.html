@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Vue JS</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <h1>Hello {{ fullName }}</h1>
+      <p>Message: {{ message }}</p>
+      <p>Message à l'envers: {{ reverseMessage }}</p>
+      <input type="text" v-model="firstname">
+      <input type="text" v-model="name">
+      <input type="text" v-model="fullName">
+      <input type="text" v-model="message">
+
+      <input type="text" v-model="obj.a">
+    </div>
+
+    <script type="module">
+      import { computed, createApp, ref, watch } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+
+      createApp({
+        setup() {
+          const name = ref('Mota');
+          const firstname = ref('Fiorella');
+          // const fullName = computed(() => `${firstname.value} ${name.value}`);
+          const fullName = computed({
+            get: () => `${firstname.value} ${name.value}`.trim(),
+            set(value) {
+              let names = value.split(' ');
+
+              firstname.value = names[0] ?? '';
+              name.value = names[1] ?? '';
+            }
+          });
+
+          const message = ref('Hello');
+          const reverseMessage = computed(() => {
+            console.log('computed');
+            return message.value.split('').reverse().join('');
+          });
+
+          // Avec Watch, on peut écouter une ref (changement)
+          watch(fullName, (newValue, oldValue) => {
+            console.log(newValue, oldValue);
+            message.value = newValue;
+          }, { immediate: false });
+
+          const obj = ref({ a: 1, b: 2 });
+
+          // Le deep permet d'écouter tous les changements d'un objet
+          watch(obj, (newObj, oldObj) => {
+            console.log(newObj, oldObj); // Egalité
+          }, { deep: true });
+
+          // Ecouter une propriété d'objet
+          watch(
+            () => obj.value.a,
+            (newValue, oldValue) => {
+              console.log(newValue, oldValue);
+            }
+          );
+
+          return { name, firstname, fullName, message, reverseMessage, obj };
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>
