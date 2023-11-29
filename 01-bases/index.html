@@ -16,7 +16,7 @@
       <p :title="message" v-if="count >= 10">{{ message }}</p>
       <p v-else>{{ 'Hello'.toUpperCase() }}</p>
       <p>{{ user.name }}</p>
-      <input type="text" v-model="user.name">
+      <input type="text" v-model.lazy="user.name" @keyup.ctrl.enter="increment(1)">
 
       <ul>
         <li v-for="(contact, index) in contacts" :key="index" :class="{ 'uppercase': contacts.length >= 4 }">
@@ -64,7 +64,7 @@
             countNormal += v;
             count.value += v; // .value mets à jour le DOM
             console.log(user.value);
-            user.value.name = 'Toto';
+            // user.value.name = 'Toto';
           };
           const enable = (event) => {
             console.log(event.currentTarget);
