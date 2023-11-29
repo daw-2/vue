@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Vue JS</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="increment(-1)" :disabled="count <= 0">-</button>
+      <!-- Interpolation Mustache -->
+      <span :class="{ 'text-green-500': count >= 10, 'font-bold': count >= 15 }">{{ count }} - {{ countNormal }}</span>
+      <button @click="increment(1)">+</button>
+
+      <p :title="message" v-if="count >= 10">{{ message }}</p>
+      <p v-else>{{ 'Hello'.toUpperCase() }}</p>
+      <p>{{ user.name }}</p>
+      <input type="text" v-model="user.name">
+
+      <ul>
+        <li v-for="(contact, index) in contacts" :key="index" :class="{ 'uppercase': contacts.length >= 4 }">
+            {{ contact }} ({{ index }})
+        </li>
+      </ul>
+
+      <input type="checkbox" id="c1" value="Matthieu" v-model="contacts">
+      <label for="c1">Matthieu</label>
+      <input type="checkbox" id="c2" value="Marina" v-model="contacts">
+      <label for="c2">Marina</label>
+      <input type="checkbox" id="c3" value="Fiorella" v-model="contacts">
+      <label for="c3">Fiorella</label>
+      <input type="checkbox" id="c4" value="Toto" v-model="contacts">
+      <label for="c4">Toto</label>
+
+      <ul>
+        <li v-for="car in cars" :key="car.id">
+            {{ car.brand }}
+        </li>
+      </ul>
+
+      <input type="checkbox" v-model="enabled">
+      <button @click="enable($event)">Cliquer</button>
+      <p v-if="enabled">Vous avez cliqué</p>
+    </div>
+
+    <script type="module">
+      import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+
+      createApp({
+        setup() {
+          const count = ref(0);
+          let countNormal = 0;
+          const user = ref({ name: 'Fiorella' });
+          const message = 'Hello Fiorella';
+          const contacts = ref(['Matthieu', 'Marina']);
+          const cars = ref([
+            { id: 1, brand: 'Renault' },
+            { id: 2, brand: 'Peugeot' },
+          ]);
+          const enabled = ref(false);
+
+          const increment = (v) => {
+            countNormal += v;
+            count.value += v; // .value mets à jour le DOM
+            console.log(user.value);
+            user.value.name = 'Toto';
+          };
+          const enable = (event) => {
+            console.log(event.currentTarget);
+            enabled.value = !enabled.value;
+            setTimeout(() => enabled.value = false, 2000);
+          }
+
+          return { count, countNormal, user, message, contacts, cars, enabled, enable, increment };
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>
