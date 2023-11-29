@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Vue JS</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
   </head>
   <body>
-    <div id="app">
+    <div id="app" v-cloak>
       <h1>{{ title }}</h1>
       <ul v-if="shown">
         <li v-for="recipe in recipes" :key="recipe.id">
