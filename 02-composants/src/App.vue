@@ -6,6 +6,7 @@
   import Footer from './components/Footer.vue';
   import Navbar from './components/Navbar.vue';
   import Term from './components/Term.vue';
+  import TermForm from './components/TermForm.vue';
   import UserForm from './components/UserForm.vue';
 
   const title = ref('Mon Application');
@@ -21,21 +22,6 @@
     { term: 'Terme 1', definition: 'Définition terme 1' },
     { term: 'Terme 2', definition: 'Définition terme 2' },
   ]);
-  const showTermForm = ref(false);
-  const newTerm = ref({
-    term: '',
-    definition: '',
-  });
-
-  const saveTerm = () => {
-    // Pour éviter les soucis de références, on copie l'objet
-    terms.value.push({ ...newTerm.value });
-    newTerm.value = {
-      term: '',
-      definition: '',
-    };
-    showTermForm.value = false;
-  };
 </script>
 
 <template>
@@ -61,22 +47,10 @@
   <Counter start="5" max="10" @increment="(event) => total += event" />
 
   <h2>Composant d'affichage I ({{ terms.length }} termes)</h2>
-  <button @click="showTermForm = !showTermForm">Nouveau terme</button>
 
-  <form v-if="showTermForm" @submit.prevent="saveTerm">
-    <div>
-      <label for="term">Terme:</label>
-      <input type="text" id="term" v-model="newTerm.term">
-    </div>
-
-    <div>
-      <label for="definition">Définition:</label>
-      <input type="text" id="definition" v-model="newTerm.definition">
-    </div>
-
-    <button :disabled="!newTerm.term.trim() || !newTerm.definition.trim()">Ok</button>
-  </form>
-
+  <TermForm
+    @added:term="(newTerm) => terms.push(newTerm)"
+  />
   <Term v-for="term in terms" :term="term" />
 
   <h2>Créer un composant réutilisable</h2>
