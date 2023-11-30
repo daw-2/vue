@@ -1,8 +1,9 @@
 <script setup>
   import { ref } from 'vue';
+  import Card from './components/Card.vue';
   import Navbar from './components/Navbar.vue';
   import Footer from './components/Footer.vue';
-import UserForm from './components/UserForm.vue';
+  import UserForm from './components/UserForm.vue';
 
   const title = ref('Mon Application');
   const changeTitle = (newTitle) => title.value = newTitle;
@@ -23,6 +24,13 @@ import UserForm from './components/UserForm.vue';
 
   {{ author }}
   <UserForm v-model="author" />
+
+  <Card>Valider</Card>
+  <Card image="https://i.pravatar.cc/50">
+    <h1>{{ author.firstname }} {{ author.name }}</h1>
+
+    <template #before>Icône</template>
+  </Card>
 
   <Footer :title="title" @update-title="(event) => title = event" />
 </template>
