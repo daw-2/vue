@@ -1,6 +1,7 @@
 <script setup>
   import { ref } from 'vue';
   import Ajax from './components/Ajax.vue';
+  import AjaxExo from './components/AjaxExo.vue';
   import Button from './components/Button.vue';
   import Card from './components/Card.vue';
   import Counter from './components/Counter.vue';
@@ -63,6 +64,9 @@
 
   <h2>Ajax avec Vue</h2>
   <Ajax />
+
+  <h2>Ajax exo</h2>
+  <AjaxExo />
 
   <Footer :title="title" @update-title="(event) => title = event" />
 </template>
