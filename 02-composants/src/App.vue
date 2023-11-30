@@ -28,7 +28,12 @@
   });
 
   const saveTerm = () => {
-    terms.value.push(newTerm.value);
+    // Pour éviter les soucis de références, on copie l'objet
+    terms.value.push({ ...newTerm.value });
+    newTerm.value = {
+      term: '',
+      definition: '',
+    };
     showTermForm.value = false;
   };
 </script>
