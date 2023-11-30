@@ -1,6 +1,7 @@
 <script setup>
   import { ref } from 'vue';
   import Navbar from './components/Navbar.vue';
+  import Footer from './components/Footer.vue';
 
   const title = ref('Mon Application');
   const changeTitle = (newTitle) => title.value = newTitle;
@@ -14,6 +15,8 @@
     <Navbar :color="color" />
     <input type="color" v-model="color">
   </header>
+
+  <Footer :title="title" @update-title="(event) => title = event" />
 </template>
 
 <style scoped></style>
