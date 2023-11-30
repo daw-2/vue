@@ -1,5 +1,6 @@
 <script setup>
   import { ref } from 'vue';
+  import Button from './components/Button.vue';
   import Card from './components/Card.vue';
   import Counter from './components/Counter.vue';
   import Footer from './components/Footer.vue';
@@ -72,6 +73,13 @@
   </form>
 
   <Term v-for="term in terms" :term="term" />
+
+  <h2>Créer un composant réutilisable</h2>
+  <Button color="blue">Cliquer</Button>
+  <Button color="green">
+    Cliquer
+    <template #right>🤖</template>
+  </Button>
 
   <Footer :title="title" @update-title="(event) => title = event" />
 </template>
