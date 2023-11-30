@@ -1,5 +1,6 @@
 <script setup>
   import { ref } from 'vue';
+  import Ajax from './components/Ajax.vue';
   import Button from './components/Button.vue';
   import Card from './components/Card.vue';
   import Counter from './components/Counter.vue';
@@ -59,6 +60,9 @@
     Cliquer
     <template #right>🤖</template>
   </Button>
+
+  <h2>Ajax avec Vue</h2>
+  <Ajax />
 
   <Footer :title="title" @update-title="(event) => title = event" />
 </template>
