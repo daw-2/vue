@@ -4,13 +4,13 @@
   const props = defineProps(['start', 'max']);
   const emit = defineEmits(['increment']);
 
-  const count = ref(props.start || 0);
+  const count = ref(parseInt(props.start || 0));
   const decrement = () => {
     count.value--;
     emit('increment', -1);
   };
   const increment = () => {
-    count.value++;
+    count.value += 1;
     emit('increment', 1);
   };
 </script>

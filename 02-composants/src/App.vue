@@ -53,7 +53,7 @@
 
   <h2>Composant counter (total: {{ total }})</h2>
   <Counter @increment="(event) => total += event" />
-  <Counter :start="5" :max="10" @increment="(event) => total += event" />
+  <Counter start="5" max="10" @increment="(event) => total += event" />
 
   <h2>Composant d'affichage I ({{ terms.length }} termes)</h2>
   <button @click="showTermForm = !showTermForm">Nouveau terme</button>
