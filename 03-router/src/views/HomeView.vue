@@ -4,8 +4,10 @@
   import { RouterLink } from 'vue-router';
   import Modal from '../components/Modal.vue';
   import { useCounterStore } from '../stores/counter';
+  import { useAuthStore } from '../stores/auth';
 
   const store = useCounterStore();
+  const auth = useAuthStore();
 
   const todos = ref([]);
   const todoBeDeleted = ref(null);
@@ -37,8 +39,10 @@
         {{ todo.name }}
       </RouterLink>
       {{ todo.done ? '✅' : '❌' }}
-      <input type="checkbox" v-model="todo.done" @change="toggleTodo(todo)">
-      <button @click="todoBeDeleted = todo">Supprimer</button>
+      <template v-if="auth.isLogged">
+        <input type="checkbox" v-model="todo.done" @change="toggleTodo(todo)">
+        <button @click="todoBeDeleted = todo">Supprimer</button>
+      </template>
     </div>
 
     <Modal :show="todoBeDeleted">
