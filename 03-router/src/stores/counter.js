@@ -4,6 +4,12 @@ import { defineStore } from 'pinia'
 
 export const useCounterStore = defineStore('counter', {
   state: () => ({ count: 0, todos: [] }),
+  getters: {
+    /* completedTodos() {
+      console.log(this.todos);
+    }, */
+    completedTodos: (state) => state.todos.filter(t => t.done).length,
+  },
   actions: {
     increment(value) {
       this.count += value;
@@ -18,9 +24,9 @@ export const useCounterStore = defineStore('counter', {
 });
 
 export const useCounterStore2 = defineStore('counter2', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
+  const count = ref(0) // state
+  const doubleCount = computed(() => count.value * 2) // getters
+  function increment() { // actions
     count.value++
   }
 

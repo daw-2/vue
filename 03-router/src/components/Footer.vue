@@ -9,5 +9,6 @@
     Tous droits réservés.
     {{ store.count }}
     <button @click="store.increment(1)">Augmenter</button>
+    Todos done: {{ store.completedTodos }}
   </p>
 </template>

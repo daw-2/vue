@@ -3,6 +3,9 @@
   import { onMounted, ref } from 'vue';
   import { RouterLink } from 'vue-router';
   import Modal from '../components/Modal.vue';
+  import { useCounterStore } from '../stores/counter';
+
+  const store = useCounterStore();
 
   const todos = ref([]);
   const todoBeDeleted = ref(null);
@@ -29,7 +32,7 @@
 
 <template>
   <div>
-    <div v-for="todo in todos" :key="todo.id">
+    <div v-for="todo in store.todos" :key="todo.id">
       <RouterLink :to="`/todo/${todo.id}`">
         {{ todo.name }}
       </RouterLink>
