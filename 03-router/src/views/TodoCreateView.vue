@@ -3,7 +3,7 @@
     <input type="text" v-model="newTodo.name">
     <p v-if="errors.name">{{ errors.name }}</p>
 
-    <button :disabled="loading">
+    <button :disabled="loading || !isValid || !dirty">
       Enregistrer
       <span v-if="loading">...</span>
     </button>
@@ -12,7 +12,7 @@
 
 <script setup>
   import axios from 'axios';
-  import { ref, watch } from 'vue';
+  import { computed, ref, watch } from 'vue';
   import { useRouter } from 'vue-router';
 
   const router = useRouter();
@@ -24,10 +24,16 @@
   const errors = ref({
     name: null,
   });
+  const dirty = ref(false);
   const loading = ref(false);
+
+  const isValid = computed(() => {
+    return Object.values(errors.value).filter(v => v).length === 0;
+  });
 
   // Validation des erreurs en "direct"
   watch(newTodo, () => {
+    dirty.value = true;
     errors.value.name = null;
 
     if (newTodo.value.name.trim().length < 2) {
