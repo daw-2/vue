@@ -1,6 +1,7 @@
 <script setup>
   import axios from 'axios';
   import { onMounted, ref } from 'vue';
+  import { RouterLink } from 'vue-router';
 
   const todos = ref([]);
 
@@ -14,7 +15,9 @@
 <template>
   <div>
     <div v-for="todo in todos" :key="todo.id">
-      {{ todo.name }}
+      <RouterLink :to="`/todo/${todo.id}`">
+        {{ todo.name }}
+      </RouterLink>
       {{ todo.done ? '✅' : '❌' }}
     </div>
   </div>

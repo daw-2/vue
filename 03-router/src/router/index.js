@@ -20,7 +20,11 @@ const router = createRouter({
     {
       path: '/hello/:name',
       component: () => import('../views/HelloView.vue')
-    }
+    },
+    {
+      path: '/todo/:id',
+      component: () => import('../views/TodoView.vue')
+    },
   ]
 })
 
