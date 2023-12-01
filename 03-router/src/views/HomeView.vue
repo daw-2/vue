@@ -10,6 +10,11 @@
       todos.value = response.data;
     });
   });
+
+  const toggleTodo = (todo) => {
+    // 2ème paramètre = on repasse l'objet à mettre à jour dans la bdd
+    axios.put(`http://localhost:3000/todos/${todo.id}`, todo);
+  }
 </script>
 
 <template>
@@ -19,6 +24,7 @@
         {{ todo.name }}
       </RouterLink>
       {{ todo.done ? '✅' : '❌' }}
+      <input type="checkbox" v-model="todo.done" @change="toggleTodo(todo)">
     </div>
   </div>
 </template>

@@ -1,6 +1,14 @@
 {
-    "todos": [
-        { "id": 1, "name": "Faire les courses", "done": false },
-        { "id": 2, "name": "Faire à manger", "done": true }
-    ]
+  "todos": [
+    {
+      "id": 1,
+      "name": "Faire les courses",
+      "done": true
+    },
+    {
+      "done": false,
+      "id": 2,
+      "name": "Faire un truc"
+    }
+  ]
 }
