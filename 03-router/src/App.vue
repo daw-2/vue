@@ -1,5 +1,10 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import Footer from './components/Footer.vue';
+import { useCounterStore } from './stores/counter';
+
+const store = useCounterStore();
+store.fetchTodos();
 </script>
 
 <template>
@@ -10,7 +15,10 @@ import { RouterLink, RouterView } from 'vue-router'
       <RouterLink to="/about">A propos</RouterLink>
       <RouterLink to="/hello/toto">Hello Toto</RouterLink>
     </nav>
+    Store: {{ store.count }}
   </header>
 
   <RouterView />
+
+  <Footer />
 </template>
